@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+group 'edu.cnm.deepdive'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+clean {
+    delete += file("$projectDir/docs/api")
+}
+
+javadoc {
+    destinationDir = file("$projectDir/docs/api")
+    options {
+        links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
+    }
+}
+
+assemble {
+    dependsOn javadoc
+}
+
+application {
+    mainClass = 'edu.cnm.deepdive.Main'
+}
+
+run {
+    standardInput = System.in
+}
