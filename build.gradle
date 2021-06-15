@@ -13,6 +13,10 @@ repositories {
 }
 
 dependencies {
+    def retrofitVersion = '2.9.0'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }

@@ -12,7 +12,6 @@ public class Main {
     do {
       // TODO Play a single game.
     } while (queryReplay(scanner, bundle));
-
   }
 
   private static boolean queryReplay(Scanner scanner, ResourceBundle bundle) {
