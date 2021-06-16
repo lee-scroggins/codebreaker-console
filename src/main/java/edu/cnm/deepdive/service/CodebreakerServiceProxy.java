@@ -10,12 +10,17 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface CodebreakerServiceProxy {
 
   @POST("codes")
   Call<Game> startGame(@Body Game game);
+
+  @GET("codes/{id}")
+  Call<Game> getGame(@Path("id") String id);
 
   static CodebreakerServiceProxy getInstance() {
     return InstanceHolder.INSTANCE;
