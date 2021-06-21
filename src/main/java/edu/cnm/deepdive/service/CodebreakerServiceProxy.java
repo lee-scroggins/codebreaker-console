@@ -3,6 +3,7 @@ package edu.cnm.deepdive.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cnm.deepdive.model.Game;
+import edu.cnm.deepdive.model.Guess;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
@@ -21,6 +22,9 @@ public interface CodebreakerServiceProxy {
 
   @GET("codes/{id}")
   Call<Game> getGame(@Path("id") String id);
+
+  @POST("codes/{id}/guesses")
+  Call<Guess> submitGuess(@Path("id")String id, @Body Guess guess);
 
   static CodebreakerServiceProxy getInstance() {
     return InstanceHolder.INSTANCE;
