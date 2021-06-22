@@ -47,4 +47,5 @@ application {
 
 run {
     standardInput = System.in
+    jvmArgs += '--add-opens=java.base/java.lang.invoke=ALL-UNNAMED'
 }

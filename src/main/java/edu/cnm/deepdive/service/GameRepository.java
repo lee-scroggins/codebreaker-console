@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.service;
 
+import edu.cnm.deepdive.model.Error;
 import edu.cnm.deepdive.model.Game;
 import edu.cnm.deepdive.model.Guess;
 import java.io.IOException;
@@ -25,18 +26,33 @@ public class GameRepository {
     return response.body();
   }
 
-  public Guess newGuess(Game game, String text) throws IOException, IllegalArgumentException {
+  public Guess newGuess(Game game, String text) throws IOException, ValidationException {
     Guess guess = new Guess();
     guess.setText(text);
     Response<Guess> response = proxy.submitGuess(game.getId(), guess).execute();
     if (!response.isSuccessful()) {
-      throw new IllegalArgumentException();
+      //noinspection ConstantConditions
+      Error error = CodebreakerServiceProxy.getGsonInstance()
+          .fromJson(response.errorBody().string(), Error.class);
+      throw new ValidationException(error);
     }
     return response.body();
   }
 
-  // TODO Define methods for obtaining a single existing game, the list of guesses in a game, and
-  //  submitting a new guess.
+  public static class ValidationException extends IllegalArgumentException {
+
+    private final Error error;
+
+    public ValidationException(Error error) {
+      this.error = error;
+    }
+
+    public Error getError() {
+      return error;
+    }
+
+  }
 
 }
+
 

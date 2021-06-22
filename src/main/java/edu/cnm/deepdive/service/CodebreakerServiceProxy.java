@@ -30,12 +30,17 @@ public interface CodebreakerServiceProxy {
     return InstanceHolder.INSTANCE;
   }
 
+  static Gson getGsonInstance() {
+    return InstanceHolder.GSON;
+  }
+
   class InstanceHolder {
 
+    private static final Gson GSON;
     private static final CodebreakerServiceProxy INSTANCE;
 
     static {
-      Gson gson = new GsonBuilder()
+      GSON = new GsonBuilder()
           .excludeFieldsWithoutExposeAnnotation()
           .setDateFormat("yyyy-MM-dd-'T'HH:mm:ss.SSSZ")
           .create();
@@ -46,7 +51,7 @@ public interface CodebreakerServiceProxy {
           .build();
       Retrofit retrofit = new Retrofit.Builder()
           .baseUrl("https://ddc-java.services/codebreaker/")
-          .addConverterFactory(GsonConverterFactory.create(gson))
+          .addConverterFactory(GsonConverterFactory.create(GSON))
           .client(client)
           .build();
       INSTANCE = retrofit.create(CodebreakerServiceProxy.class);
